@@ -6,13 +6,10 @@ const express = require('express');
 const { typeDefs } = require('./src/types');
 const { resolvers } = require('./src/resolvers');
 
-const pino = require('pino');
+const logger = require('./src/logger');
+
 const expressPino = require('express-pino-logger');
 
-const logger = pino({
-  level: process.env.LOG_LEVEL || 'info',
-  prettyPrint: true
-});
 const expressLogger = expressPino({ logger });
 
 const app = express();
