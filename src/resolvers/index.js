@@ -1,5 +1,6 @@
 const search = require('./search');
 const movies = require('./movies');
+const lists = require('./lists');
 const authentication = require('./authentication');
 
 const resolveType = {
@@ -11,9 +12,11 @@ const resolveType = {
 const resolvers = {
   Query: {
     ...search,
-    ...movies.resolvers
+    ...movies.resolvers,
+    ...lists.query
   },
   Mutation: {
+    ...lists.mutation,
     ...authentication.mutation
   },
   PageResponse: resolveType,

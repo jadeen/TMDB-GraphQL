@@ -20,7 +20,6 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: ({ req }) => {
-    logger.info('authorization %s', req.headers.authorization);
     if (req.headers.authorization) {
       return { identity_token: req.headers.authorization.split(' ')[1] };
     } else {
