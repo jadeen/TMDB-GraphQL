@@ -211,7 +211,14 @@ module.exports = gql`
     total_results: Int!
   }
 
-  type List {
+  type MovieLists {
+    page: Int!
+    results: [MovieList!]!
+    total_pages: Int!
+    total_results: Int!
+  }
+
+  type MovieList {
     description: String
     favorite_count: Int
     id: ID!
@@ -220,13 +227,6 @@ module.exports = gql`
     list_type: String
     name: String
     poster_path: String
-  }
-
-  type MovieLists {
-    page: Int!
-    results: [List!]!
-    total_pages: Int!
-    total_results: Int!
   }
 
   extend type Query {
