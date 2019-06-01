@@ -13,7 +13,8 @@ const resolvers = {
     ...movies.resolvers
   },
   PageResponse: resolveType,
-  Movie: movies.Movie
+  Movie: movies.Movie,
+  ...movies.enum
 };
 
 module.exports = {

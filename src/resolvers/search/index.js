@@ -10,7 +10,7 @@ module.exports = {
     const query = queryStringify(args.query);
 
     const response = await axios.get(
-      `${TMDB_API_KEY}/search/movie?api_key=${TMDB_URL}${query}`
+      `${TMDB_URL}/search/movie?api_key=${TMDB_API_KEY}${query}`
     );
 
     return response.data;
@@ -19,7 +19,7 @@ module.exports = {
     const query = queryStringify(args.query);
 
     const response = await axios.get(
-      `${TMDB_API_KEY}/search/person?api_key=${TMDB_URL}${query}`
+      `${TMDB_URL}/search/person?api_key=${TMDB_API_KEY}${query}`
     );
 
     return response.data;
