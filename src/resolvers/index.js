@@ -1,5 +1,6 @@
 const search = require('./search');
 const movies = require('./movies');
+const authentication = require('./authentication');
 
 const resolveType = {
   __resolveType() {
@@ -11,6 +12,9 @@ const resolvers = {
   Query: {
     ...search,
     ...movies.resolvers
+  },
+  Mutation: {
+    ...authentication.mutation
   },
   PageResponse: resolveType,
   Movie: movies.Movie,
