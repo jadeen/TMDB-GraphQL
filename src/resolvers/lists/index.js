@@ -5,16 +5,12 @@ const { TMDB_API_KEY, TMDB_URL } = process.env;
 
 const url = `${TMDB_URL.replace('3', '4')}/list`;
 
-const generateHeaders = identity_token => ({
-  Authorization: `Bearer ${identity_token}`
-});
-
 module.exports = {
   query: {
-    getList: async (_parent, args, { identity_token }) => {
+    getList: async (_parent, args, { headers }) => {
       try {
         const response = await axios.get(`${url}/${args.list_id}`, {
-          headers: generateHeaders(identity_token)
+          headers
         });
 
         return response.data;
@@ -25,14 +21,12 @@ module.exports = {
     checkItemStatus: async (
       _parent,
       { list_id, query: { media_id, media_type } },
-      { identity_token }
+      { headers }
     ) => {
       try {
         const _url = `${url}/${list_id}/item_status?media_id=${media_id}&media_type=${media_type}`;
 
-        const response = await axios.get(_url, {
-          headers: generateHeaders(identity_token)
-        });
+        const response = await axios.get(_url, { headers });
 
         return response.data;
       } catch (e) {
@@ -45,14 +39,12 @@ module.exports = {
     }
   },
   mutation: {
-    createList: async (_parent, args, { identity_token }) => {
+    createList: async (_parent, args, { headers }) => {
       try {
         const response = await axios.post(
           `${url}?api_key=${TMDB_API_KEY}`,
           args.credentials,
-          {
-            headers: generateHeaders(identity_token)
-          }
+          { headers }
         );
 
         return response.data;
@@ -60,12 +52,12 @@ module.exports = {
         logger.error(e.response.data.status_message);
       }
     },
-    updateList: async (_parent, args, { identity_token }) => {
+    updateList: async (_parent, args, { headers }) => {
       try {
         const response = await axios.put(
           `${url}/${args.list_id}?api_key=${TMDB_API_KEY}`,
           { ...args.credentials },
-          { headers: generateHeaders(identity_token) }
+          { headers }
         );
 
         return response.data;
@@ -73,10 +65,10 @@ module.exports = {
         logger.error(e.response.data.status_message);
       }
     },
-    clearList: async (_parent, args, { identity_token }) => {
+    clearList: async (_parent, args, { headers }) => {
       try {
         const response = await axios.get(`${url}/${args.list_id}/clear`, {
-          headers: generateHeaders(identity_token)
+          headers
         });
 
         return response.data;
@@ -84,10 +76,10 @@ module.exports = {
         logger.error(e.response.data.status_message);
       }
     },
-    deleteList: async (_parent, args, { identity_token }) => {
+    deleteList: async (_parent, args, { headers }) => {
       try {
         const response = await axios.delete(`${url}/${args.list_id}`, {
-          headers: generateHeaders(identity_token)
+          headers
         });
 
         return response.data;
@@ -95,14 +87,12 @@ module.exports = {
         logger.error(e.response.data.status_message);
       }
     },
-    addItemsList: async (_parent, args, { identity_token }) => {
+    addItemsList: async (_parent, args, { headers }) => {
       try {
         const response = await axios.post(
           `${url}/${args.list_id}/items?api_key=${TMDB_API_KEY}`,
           { ...args.credentials },
-          {
-            headers: generateHeaders(identity_token)
-          }
+          { headers }
         );
 
         return response.data;
@@ -110,14 +100,12 @@ module.exports = {
         logger.error(e.response.data.status_message);
       }
     },
-    updateItemsList: async (_parent, args, { identity_token }) => {
+    updateItemsList: async (_parent, args, { headers }) => {
       try {
         const response = await axios.put(
           `${url}/${args.list_id}/items?api_key=${TMDB_API_KEY}`,
           { ...args.credentials },
-          {
-            headers: generateHeaders(identity_token)
-          }
+          { headers }
         );
 
         return response.data;
@@ -125,7 +113,7 @@ module.exports = {
         logger.error(e.response.data.status_message);
       }
     },
-    removeItemsList: async (_parent, args, { identity_token }) => {
+    removeItemsList: async (_parent, args, { headers }) => {
       try {
         const response = await axios.delete(
           `${url}/${args.list_id}/items?api_key=${TMDB_API_KEY}`,
@@ -133,7 +121,7 @@ module.exports = {
             data: {
               ...args.credentials
             },
-            headers: generateHeaders(identity_token)
+            headers
           }
         );
         return response.data;
