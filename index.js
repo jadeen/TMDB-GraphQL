@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const { ApolloServer } = require('apollo-server-express');
+const { ApolloServer, makeExecutableSchema } = require('apollo-server-express');
 const express = require('express');
 
 const { typeDefs } = require('./src/types');
@@ -16,15 +16,29 @@ const app = express();
 
 app.use(expressLogger);
 
-const server = new ApolloServer({
+const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
+  resolverValidationOptions: { requireResolversForResolveType: false }
+});
+
+const server = new ApolloServer({
+  schema,
   context: ({ req }) => {
     if (req.headers.authorization) {
-      return { identity_token: req.headers.authorization.split(' ')[1] };
+      const token = req.headers.authorization.split(' ')[1];
+
+      return {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
     } else {
-      return { identity_token: null };
+      return { headers: null };
     }
+  },
+  resolverValidationOptions: {
+    requireResolversForResolveType: false
   }
 });
 
