@@ -11,7 +11,9 @@ module.exports = {
       try {
         const response = await axios.post(
           `${v4_url}/auth/request_token?api_key=${TMDB_API_KEY}`,
-          {},
+          {
+            redirect_to: 'http://localhost:4200/approve'
+          },
           {
             headers: {
               Authorization: `Bearer ${TMDB_ACCESS_TOKEN}`

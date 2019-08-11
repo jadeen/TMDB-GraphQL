@@ -28,6 +28,7 @@ const server = new ApolloServer({
     if (req.headers.authorization) {
       const token = req.headers.authorization.split(' ')[1];
 
+      console.log('token', token);
       return {
         headers: {
           Authorization: `Bearer ${token}`
