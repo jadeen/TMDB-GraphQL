@@ -9,9 +9,12 @@ module.exports = {
   query: {
     getList: async (_parent, args, { headers }) => {
       try {
-        const response = await axios.get(`${url}/${args.list_id}`, {
-          headers
-        });
+        const response = await axios.get(
+          `${url}/${args.list_id}?page=${args.page}`,
+          {
+            headers
+          }
+        );
 
         return response.data;
       } catch (e) {

@@ -1,7 +1,9 @@
 const axios = require('axios');
 
 const queryStringify = args =>
-  Object.keys(args).reduce((acc, key) => `${acc}&${key}=${args[key]}`, '');
+  Object.keys(args)
+    .filter(key => args[key] && args[key].length > 0)
+    .reduce((acc, key) => `${acc}&${key}=${args[key]}`, '');
 
 const { TMDB_API_KEY, TMDB_URL } = process.env;
 
@@ -12,7 +14,6 @@ module.exports = {
     const response = await axios.get(
       `${TMDB_URL}/search/movie?api_key=${TMDB_API_KEY}${query}`
     );
-
     return response.data;
   },
   searchPerson: async (_parent, args) => {

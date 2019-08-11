@@ -12,12 +12,15 @@ module.exports = {
   query: {
     accountLists: async (_parent, { account_id }, { headers }) => {
       try {
+        console.log('account_id', account_id);
         const response = await axios.get(`${url}/${account_id}/lists`, {
           headers
         });
 
+        console.log('clasic', response.data);
         return response.data;
       } catch (e) {
+        console.log('error', e.response.data);
         return e.response.data;
       }
     },

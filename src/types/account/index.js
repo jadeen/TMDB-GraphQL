@@ -35,10 +35,10 @@ module.exports = gql`
   }
 
   type AccountLists {
-    page: Int!
+    page: Int
     results: [AccountList]
-    total_results: Int!
-    total_pages: Int!
+    total_results: Int
+    total_pages: Int
   }
 
   type Movies {

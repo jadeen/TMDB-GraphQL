@@ -11,7 +11,7 @@ module.exports = gql`
     description: String
     favorite_count: Int
     id: ID!
-    item_count: Int
+    total_results: Int
     iso_639_1: String
     list_type: String
     name: String
@@ -110,7 +110,7 @@ module.exports = gql`
   }
 
   extend type Query {
-    getList(list_id: Int!): List
+    getList(list_id: Int!, page: Int): List
     checkItemStatus(
       list_id: Int!
       query: CheckItemStatusQuery
